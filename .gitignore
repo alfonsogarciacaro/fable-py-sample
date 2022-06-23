@@ -1,0 +1,5 @@
+program.py
+__pycache__/
+AppData/
+bin/
+obj/
