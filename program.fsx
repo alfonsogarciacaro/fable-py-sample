@@ -23,7 +23,7 @@ let main argv =
     printfn $"Hello {name}!"
 
     // Open file with builtin `open`
-    use file = builtins.``open``(StringPath "data.txt")
+    use file = builtins.``open``("data.txt", "r")
     file.read() |> printfn "File contents: %s"
 
     // Open file with Pandas. We don't have bindings yet
