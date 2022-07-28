@@ -24,15 +24,20 @@ let main argv =
 
     // Open file with builtin `open`
     use file = builtins.``open``("data.txt", "r")
-    file.read() |> printfn "File contents: %s"
+    let contents = file.read()
+    let reversed = contents.Split(" ") |> Array.rev |> String.concat " "
+    printfn $"Data:     {contents}"
+    printfn $"Reversed: {reversed}"
 
-    // Open file with Pandas. We don't have bindings yet
-    // but you can use dynamic programming
-    let df = pandas.read_csv("numbers.csv")
-    builtins.print(df)
-    let columnA: int[] = df.loc("A")
-    columnA |> Array.map (fun i -> i + 4) |> Array.sum |> printfn "%i"
+    use out = builtins.``open``("reversed.txt", "w")
+    out.write reversed |> ignore
 
-    // pandas?plotting?andrews_curves(df, "B")
+    // Uncomment the following lines to see how to interact with a Python library
+    // Please note this requires Pandas to be installed in your Python environment
+    
+    // let df = pandas.read_csv("numbers.csv")
+    // builtins.print(df)
+    // let columnA: int[] = df.loc("A")
+    // columnA |> Array.map (fun i -> i + 4) |> Array.sum |> printfn "%i"
 
     0
