@@ -1,43 +1,36 @@
-﻿#r "nuget:Fable.Python"
+﻿#r "nuget:Fable.Core, 4.0.0-theta-002"
 
+open System
 open Fable.Core
-open Fable.Core.PyInterop
-open Fable.Python.Builtins
 
-module Pandas =
-    type DataFrame =
-        [<Emit("$0[$1]")>]
-        abstract loc: label: obj -> 'T
+Py.NEW_CELL
 
-    type IPandas =
-        abstract read_csv: string -> DataFrame
+printfn "This is a cell"
 
-    [<ImportAll("pandas")>]
-    let pandas: IPandas = nativeOnly
+Py.NEW_CELL
 
-open Pandas
+printfn "This is another cell"
 
-[<EntryPoint>]
-let main argv =
-    let name = Array.tryHead argv |> Option.defaultValue "Guest"
-    printfn $"Hello {name}!"
+Py.NEW_CELL
 
-    // Open file with builtin `open`
-    use file = builtins.``open``("data.txt", "r")
-    let contents = file.read()
-    let reversed = contents.Split(" ") |> Array.rev |> String.concat " "
-    printfn $"Data:     {contents}"
-    printfn $"Reversed: {reversed}"
+printfn "Import matplotlib"
 
-    use out = builtins.``open``("reversed.txt", "w")
-    out.write reversed |> ignore
+Py.python """
+import matplotlib.pyplot as plt
+"""
 
-    // Uncomment the following lines to see how to interact with a Python library
-    // Please note this requires Pandas to be installed in your Python environment
-    
-    // let df = pandas.read_csv("numbers.csv")
-    // builtins.print(df)
-    // let columnA: int[] = df.loc("A")
-    // columnA |> Array.map (fun i -> i + 4) |> Array.sum |> printfn "%i"
+Py.NEW_CELL
 
-    0
+printfn "Generate data in F#"
+
+let x = [| 0. .. 0.20 .. 20 |]
+let y = x |> Array.map Math.Sin
+
+Py.NEW_CELL
+
+printfn "Plotting..."
+
+Py.python """
+plt.plot(x, y)
+plt.show()
+"""

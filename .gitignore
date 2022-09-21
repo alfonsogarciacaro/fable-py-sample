@@ -1,6 +1,7 @@
 program.py
 reversed.txt
 __pycache__/
+_packagemanagement/
 AppData/
 bin/
 obj/
