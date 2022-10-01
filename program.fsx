@@ -1,4 +1,4 @@
-﻿#r "nuget:Fable.Core, 4.0.0-theta-002"
+﻿#r "nuget:Fable.Core, 4.0.0-theta-004"
 
 open System
 open Fable.Core
@@ -7,9 +7,14 @@ Py.NEW_CELL
 
 printfn "This is a cell"
 
-Py.NEW_CELL
+let result =
+    "FooBar"
+    |> Seq.rev
+    |> Seq.toArray
+    |> String
 
-printfn "This is another cell"
+// Result at the end of cell is displayed
+result
 
 Py.NEW_CELL
 
